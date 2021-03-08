@@ -1,4 +1,3 @@
-
 #Juan tiene un nuevo Estacionamiento en la Avenida Juarez por lo cual quiere llevar el control de todo un dia, Realiza un programa en el que:
 #Se ingresen cuántos autos se quedaron guardados toda la noche
 #Se ingresen las placas de cada Auto
@@ -77,32 +76,34 @@ class Estacionamiento:
                 
 objeto = Estacionamiento() 
 
-agregar = str(input("Total de Autos en el Estacionamiento=> ")) 
+agregar = int(input("Total de Autos en el Estacionamiento=> ")) 
 for i in range (agregar):
-    numeroautos = str(input("Ingrese sus datos) "+str(i+1)+"=> "))
+    numeroautos = int(input("Ingrese sus datos) "+str(i+1)+"=> "))
     objeto.insertar_ultimo_auto(numeroautos) 
 objeto.imprimir_lista_autos() 
 
 if input("Desea agregar el primer Auto (si/no): ").lower() == "si": 
-    numeroautos = str(input("Ingrese Datos del Auto=> ")) 
+    numeroautos = int(input("Ingrese Datos del Auto=> ")) 
     objeto.insertar_primer_auto(numeroautos) 
     objeto.imprimir_lista_autos() 
 
 
 if input("Agregaras Otro Auto (si/no): ").lower() == "si":
-    numeroautos = str(input("Ingrese datos del auto=> ")) 
-    despues = str(input("Despues de que Auto =>")) 
+    numeroautos = int(input("Ingrese datos del auto=> ")) 
+    despues = int(input("Despues de que Auto =>")) 
     objeto.insertar_despues_auto(despues, numeroautos) 
     objeto.imprimir_lista_autos() 
 
 if input("Agregaras otro Auto (si/no): ").lower() == "si":
-    numero = float(input("Ingrese Datos del Auto=> ")) 
-    indice = float(input("Despues de que Auto? =>")) 
+    numero = int(input("Ingrese Datos del Auto=> ")) 
+    indice = int(input("Despues de que Auto? =>")) 
     objeto.insertar_auto_posicion(indice, numero) 
     objeto.imprimir_lista() 
 
 
 if input("Es el ultimo auto a Reguustar? (si/no): ").lower() == "si":
-    numeroautos = float(input("Ingrese Datos del Auto=> ")) 
+    numeroautos = int(input("Ingrese Datos del Auto=> ")) 
     objeto.insertar_final(numeroautos) 
     objeto.imprimir_lista()  
+
+
