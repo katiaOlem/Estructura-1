@@ -1,3 +1,4 @@
+#Lista Circular
 #En una escuela la maestra decidio hacer un juego, en total tenia 10 alumnos y el juego consistia  en que cada alumno era un número, debian responder una pregunta y si respondian mal eran eliminados, y los 5 que se quedaran ganarian un punto extra 
 #Realiza un programa en que:
 #Ingreses los 10 alumnos
@@ -97,7 +98,7 @@ class ListaCircular:
         if self.lista_vacia(): 
             return
         n = self.inicio_nodo 
-        print("Cuentas registradas:")
+        print("Alumnos que van Ganando => ")
         print(n.dato)
         while n.sig != self.inicio_nodo: 
             n = n.sig 
@@ -135,7 +136,7 @@ if input("Desea seleccionar quien es el cuarto Eliminado (si/no) => ").lower() =
     objeto.eliminarAlumno(al) 
     objeto.imprimir_ganadores() 
 
-if input("Desea seleccionar quien es el quinto Eliminado (SI/NO)=> ").lower() == "si": 
+if input("Desea seleccionar quien es el quinto Eliminado (si/no)=> ").lower() == "si": 
     al = int(input("Ingrese número del alumno eliminado =>   "))
     objeto.eliminarAlumno(al) 
     objeto.imprimir_ganadores() 
@@ -147,24 +148,25 @@ if input("Agregara el nombre del primer alumno ganador? (si/no)=> ").lower() == 
 
 if input("Agregara el nombre del segudo alumno ganador?(si/no)=> ").lower() == "si": 
     numero = input("Escriba el nombre del Alumno => ") 
-    index = int(input("Ingrese el numero asignado")) 
+    index = int(input("Ingrese que numero esta antes de el => ")) 
     objeto.insertar_nombrealumno(index,numero) 
     objeto.imprimir_ganadores() 
 
 if input("Agregara el nombre del tercer alumno ganador?(si/no)=> ").lower() == "si": 
     numero = input("Escriba el nombre del Alumno => ") 
-    index = int(input("Ingrese el numero asignado")) 
+    index = int(input("Ingrese que numero esta antes de el =>")) 
     objeto.insertar_nombrealumno(index,numero) 
     objeto.imprimir_ganadores() 
 
 if input("Agregara el nombre del cuarto alumno ganador?(si/no)=> ").lower() == "si": 
     numero = input("Escriba el nombre del Alumno => ") 
-    index = int(input("Ingrese el numero asignado")) 
+    index = int(input("Ingrese que numero esta antes de el =>")) 
     objeto.insertar_nombrealumno(index,numero) 
     objeto.imprimir_ganadores() 
 
 if input("Agregara el nombre del quinto alumno ganador?(si/no)=> ").lower() == "si":
-    numero = int(input("Escriba el nombre del Alumno =>  "))
-    objeto.insertar_nombres(numero) 
+    numero = input("Escriba el nombre del Alumno =>  ")
+    index = int(input("Ingrese que numero esta antes de el =>"))
+    objeto.insertar_nombrealumno(index,numero) 
     objeto.imprimir_ganadores() 
 
