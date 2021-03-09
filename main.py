@@ -1,108 +1,170 @@
+#En una escuela la maestra decidio hacer un juego, en total tenia 10 alumnos y el juego consistia  en que cada alumno era un número, debian responder una pregunta y si respondian mal eran eliminados, y los 5 que se quedaran ganarian un punto extra 
+#Realiza un programa en que:
+#Ingreses los 10 alumnos
+#Ingrese numero de cada alumno
+#se elimine al que responda mal
+#Agregue los nombres de los 5 alumnos
+#Se Impriman el total de alumnos ganadores
 
-#Juan tiene un nuevo Estacionamiento en la Avenida Juarez por lo cual quiere llevar el control de todo un dia, Realiza un programa en el que:
-#Se ingresen cuántos autos se quedaron guardados toda la noche
-#Se ingresen las placas de cada Auto
-#Cuando llegue el primer auto la persona confirme para tener el control de la hora en que se empieza a Ocupar el Estacionamiento
-#Se ingresen los datos del primer Auto
-#Que cada que llegue un Auto la persona diga que lugar esta disponoble dentras, o delante de que auto
-#Ir eliminando los autos que se retiran
-#Por ultimo agregar el ultimo Auto que llega 
-#Imprimir el total de Autos que se quedaron
 
-class Auto:  
+class Alumno: 
     def __init__(self, dato):
-        self.elemento = dato 
+        self.dato = dato 
         self.sig = None 
 
-class Estacionamiento: 
+ 
+class ListaCircular: 
     def __init__(self): 
-        self.inicio_auto = None 
-
-    def insertar_primer_auto(self, dato):
-        nuevo_auto = Auto(dato) 
-        nuevo_auto.sig = self.inicio_auto
-        self.inicio_auto= nuevo_auto
-
-    def insertar_ultimo_auto(self, dato): 
-        nuevo_auto = Auto(dato) 
-        if self.inicio_auto is None: 
-            self.inicio_auto = nuevo_auto 
-            return
-        n = self.inicio_auto 
-        while n.sig is not None: 
-            n= n.sig 
-        n.sig = nuevo_auto; 
-
-    def insertar_despues_auto(self, x, dato): 
-        n = self.inicio_auto 
+        self.inicio_nodo = None 
+    def lista_vacia(self): 
+        return self.inicio_nodo is None 
+ 
+    def insertar_nombre(self, dato): 
+        nuevo_nodo = Alumno(dato) 
+        if self.lista_vacia(): 
+            self.inicio_nodo = nuevo_nodo 
+            nuevo_nodo.sig = self.inicio_nodo 
+        else:
+            n = self.inicio_nodo 
+            while n.sig is not self.inicio_nodo:
+                n = n.sig 
+            n.sig = nuevo_nodo 
+            nuevo_nodo.sig = self.inicio_nodo 
+            self.inicio_nodo = nuevo_nodo 
+ 
+    def insertar_nombres(self, index, dato): 
+        nuevo_nodo = Alumno(dato) 
+        if index < 0 or index > self.contar_alumnos(): 
+            print ("***Verifica Tus datos***")
+        elif index == 0: 
+            self.insertar_nombre(dato)
+        else:
+            n = self.inicio_nodo
+            ant = None
+            contador = 0
+            while contador < index:
+                ant = n 
+                n = n.sig 
+                contador += 1
+            ant.sig = nuevo_nodo 
+            nuevo_nodo.sig = n
+ 
+    def insertar_nombrealumno(self, index, dato): 
+        n = self.inicio_nodo
 
         while n is not None: 
-            if n.elemento == x: 
+            if n.dato == index: 
                 break
             n = n.sig 
-        if n is None:
-            print("***Verifique nuevamente ese lugar esta Ocupado***")
-        else:
-            nuevo_auto = Auto(dato) 
-            nuevo_auto.sig = n.sig 
-            n.sig = nuevo_auto 
-
-    def insertar__auto_posicion (self, index, dato): 
-        if index == 1: #
-            nuevo_auto = Auto(dato) 
-            nuevo_auto.sig = self.inicio_auto
-            self.inicio_auto = nuevo_auto
-        i = 1 
-        n = self.inicio_auto
-        while i < index -1 and n is not None: 
-            n = n.sig 
-            i = i+1 
         if n is None: 
-            print("***Verifique nuevamente ese lugar esta Ocupado***")
-        else: 
-            nuevo_auto = Auto(dato) 
-            nuevo_auto.sig = n.sig 
-            n.sig = nuevo_auto 
-
-    def imprimir_lista_autos(self):  
-        if self.inicio_auto is None: 
-            print("***Verifique no Existen autos Registrados***")
-            return
+            print("**Verfica Datos**")
         else:
-            n = self.inicio_auto 
-            print("**Autos en el Estacionamiento=>** ")
-            while n is not None:
-                print(n.elemento)
+            nuevo_nodo = Alumno(dato) 
+            nuevo_nodo.sig = n.sig 
+            n.sig = nuevo_nodo
+ 
+    def eliminarAlumno(self, dato):
+        if self.lista_vacia(): 
+            return
+                 
+        elif dato == self.inicio_nodo.dato:
+            n = self.inicio_nodo
+            while n.sig != self.inicio_nodo: 
                 n = n.sig 
-                
-objeto = Estacionamiento() 
+            n.sig = self.inicio_nodo.sig 
+            self.inicio_nodo = self.inicio_nodo.sig 
+        else: 
+            n = self.inicio_nodo 
+            ant = None
+            while n.dato != dato:  
+                ant = n
+                n = n.sig
+            ant.sig = n.sig
+ 
 
-agregar = str(input("Total de Autos en el Estacionamiento=> ")) 
-for i in range (agregar):
-    numeroautos = str(input("Ingrese sus datos) "+str(i+1)+"=> "))
-    objeto.insertar_ultimo_auto(numeroautos) 
-objeto.imprimir_lista_autos() 
+    def contar_alumnos(self):        
+        if self.lista_vacia(): 
+            return
+        n = self.inicio_nodo 
+        contador = 0 
+        while n.sig != self.inicio_nodo: 
+            n = n.sig 
+            contador+=1 
+        return contador+1 
 
-if input("Desea agregar el primer Auto (si/no): ").lower() == "si": 
-    numeroautos = str(input("Ingrese Datos del Auto=> ")) 
-    objeto.insertar_primer_auto(numeroautos) 
-    objeto.imprimir_lista_autos() 
+    def imprimir_ganadores(self):
+                 
+        if self.lista_vacia(): 
+            return
+        n = self.inicio_nodo 
+        print("Cuentas registradas:")
+        print(n.dato)
+        while n.sig != self.inicio_nodo: 
+            n = n.sig 
+            print(n.dato) 
+  
+ 
+
+objeto = ListaCircular()
 
 
-if input("Agregaras Otro Auto (si/no): ").lower() == "si":
-    numeroautos = str(input("Ingrese datos del auto=> ")) 
-    despues = str(input("Despues de que Auto =>")) 
-    objeto.insertar_despues_auto(despues, numeroautos) 
-    objeto.imprimir_lista_autos() 
-
-if input("Agregaras otro Auto (si/no): ").lower() == "si":
-    numero = float(input("Ingrese Datos del Auto=> ")) 
-    indice = float(input("Despues de que Auto? =>")) 
-    objeto.insertar_auto_posicion(indice, numero) 
-    objeto.imprimir_lista() 
+agregar = int(input("Cuántos alumnos son=> ")) 
+for i in range (agregar): 
+    numero = int(input("Ingrese el # asignado a cada alumno "+str(i+1)+"=> "))
+    objeto.insertar_nombre(numero) 
+objeto.imprimir_ganadores() 
 
 
-if input("Es el ultimo auto a Reguustar? (si/no): ").lower() == "si":
-    numeroautos = float(input("Ingrese Datos del Auto=> ")) 
-    objeto.insertar_final(numeroautos) 
-    objeto.imprimir_lista()  
+if input("Desea seleccionar quien es el primer Eliminado (si/no)=> ").lower() == "si": 
+    al = int(input("Ingrese número del alumno eliminado => "))
+    objeto.eliminarAlumno(al) 
+    objeto.imprimir_ganadores() 
+
+if input("Desea seleccionar quien es el segundo Eliminado (si/no)=> ").lower() == "si": 
+    al = int(input("Ingrese número del alumno eliminado => "))
+    objeto.eliminarAlumno(al) 
+    objeto.imprimir_ganadores() 
+
+if input("Desea seleccionar quien es el tercer Eliminado (si/no)=> ").lower() == "si": 
+    al = int(input("Ingrese número del alumno eliminado => "))
+    objeto.eliminarAlumno(al) 
+    objeto.imprimir_ganadores() 
+
+if input("Desea seleccionar quien es el cuarto Eliminado (si/no) => ").lower() == "si": 
+    al = int(input("Ingrese número del alumno eliminado => "))
+    objeto.eliminarAlumno(al) 
+    objeto.imprimir_ganadores() 
+
+if input("Desea seleccionar quien es el quinto Eliminado (SI/NO)=> ").lower() == "si": 
+    al = int(input("Ingrese número del alumno eliminado =>   "))
+    objeto.eliminarAlumno(al) 
+    objeto.imprimir_ganadores() 
+
+if input("Agregara el nombre del primer alumno ganador? (si/no)=> ").lower() == "si": 
+    numero = input("Escriba el nombre del Alumno =>  ")
+    objeto.insertar_nombre(numero) 
+    objeto.imprimir_ganadores() 
+
+if input("Agregara el nombre del segudo alumno ganador?(si/no)=> ").lower() == "si": 
+    numero = input("Escriba el nombre del Alumno => ") 
+    index = int(input("Ingrese el numero asignado")) 
+    objeto.insertar_nombrealumno(index,numero) 
+    objeto.imprimir_ganadores() 
+
+if input("Agregara el nombre del tercer alumno ganador?(si/no)=> ").lower() == "si": 
+    numero = input("Escriba el nombre del Alumno => ") 
+    index = int(input("Ingrese el numero asignado")) 
+    objeto.insertar_nombrealumno(index,numero) 
+    objeto.imprimir_ganadores() 
+
+if input("Agregara el nombre del cuarto alumno ganador?(si/no)=> ").lower() == "si": 
+    numero = input("Escriba el nombre del Alumno => ") 
+    index = int(input("Ingrese el numero asignado")) 
+    objeto.insertar_nombrealumno(index,numero) 
+    objeto.imprimir_ganadores() 
+
+if input("Agregara el nombre del quinto alumno ganador?(si/no)=> ").lower() == "si":
+    numero = int(input("Escriba el nombre del Alumno =>  "))
+    objeto.insertar_nombres(numero) 
+    objeto.imprimir_ganadores() 
+
